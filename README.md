@@ -2,9 +2,6 @@
 
 Graduation project for the extention of MBA Applied Data Science for Business on Pearson College of London 
 
-# Rai Monitoring
-Raízen Monitoring Library (`rai_monitoring`) is a custom library to aggregate our Machine Learning monitoring framework.
-
 -----------
 
 ## Description:
