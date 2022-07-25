@@ -1,0 +1,93 @@
+---
+title: "MBA Extention London Health Project"
+output: html_document
+date: '2022-07-25'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Descrição
+
+bla bla bla 
+
+
+## Importing Database
+
+```{r importing}
+dados_gdp <- read.csv("gdp_all.csv")
+dados_health <- read.csv("healthcare_all.csv")
+dados_population <- read.csv("population_all.csv")
+
+dados1 <- 
+  dados_gdp %>%
+  inner_join(
+    dados_health,
+    by = c('date'='date','country'='country')
+    )
+dados <-
+  dados1  %>%
+  inner_join(
+    dados_population,
+    by = c('date'='date','country'='country')
+)
+
+```
+
+## Basic counting verifications
+
+```{r basic verification}
+quantidades <- 
+  dados %>%
+  group_by(country) %>%
+  summarise(
+    obs=n()
+  )
+quantidades
+
+```
+
+## Filtering Groups
+
+
+```{r filtering}
+filtrado <- 
+  dados %>%
+  filter(str_detect(date,"^20"))
+
+filtrado_quantidades <-
+  filtrado %>%
+  group_by(country) %>%
+  summarise(
+    obs=n()  
+  )
+filtrado_quantidades
+
+paises_selecionados <- 
+  filtrado_quantidades %>%
+  filter(obs>=20)
+
+
+```
+
+## Fitering countrys with at least 15 years of data
+
+```{r fitering countrys with at least 15 years of data}
+base_limpa <- 
+  filtrado %>%
+  inner_join(
+    paises_selecionados,
+    by = "country"
+  )
+
+```
+
+## Write Final Dataset
+
+```{Final Dataset}
+write.csv(base_limpa,"final_dataset.csv", row.names = FALSE)
+  )
+```
+
+
