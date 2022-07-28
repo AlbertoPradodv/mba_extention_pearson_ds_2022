@@ -19,6 +19,8 @@ bla bla bla
 dados_gdp <- read.csv("gdp_all.csv")
 dados_health <- read.csv("healthcare_all.csv")
 dados_population <- read.csv("population_all.csv")
+dados_life_expectation <-read.csv("lifeexpectancy_all_final.csv")
+
 
 dados1 <- 
   dados_gdp %>%
@@ -26,12 +28,18 @@ dados1 <-
     dados_health,
     by = c('date'='date','country'='country')
     )
-dados <-
+dados2 <-
   dados1  %>%
   inner_join(
     dados_population,
     by = c('date'='date','country'='country')
 )
+dados <-
+  dados2  %>%
+  inner_join(
+    dados_life_expectation,
+    by = c('date'='date','country'='country')
+  )
 
 ```
 
@@ -86,7 +94,7 @@ base_limpa <-
 ## Write Final Dataset
 
 ```{Final Dataset}
-write.csv(base_limpa,"final_dataset.csv", row.names = FALSE)
+write.csv(base_limpa,"database_clean.csv", row.names = FALSE)
   )
 ```
 
